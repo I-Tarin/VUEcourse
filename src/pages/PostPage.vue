@@ -25,7 +25,8 @@
       v-if="!isPostLoading"
     />
     <div v-else>Идёт загрузка...</div>
-    <div ref="observer" class="observer"></div>
+    <div v-intersection class="observer"></div>
+    <!-- <div ref="observer" class="observer"></div> -->
     <!-- Кнопки страниц -->
     <!-- <div class="page__wrapper">
       <div
@@ -130,8 +131,8 @@ export default {
   mounted() {
     // Intersection Observer API подгрузка страницы
     this.fetchPosts();
-    console.log(this.$refs.observer);
-    const options = {
+    /* console.log(this.$refs.observer); */
+    /* const options = {
       rootMargin: '0px',
       threshold: 1.0
     }
@@ -141,7 +142,7 @@ export default {
       }
     };
     const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$refs.observer);
+    observer.observe(this.$refs.observer); */
   },
   computed: {
     sortedPost() {

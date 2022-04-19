@@ -2,7 +2,7 @@ import Main from "@/pages/Main.vue"
 import { createRouter, createWebHistory } from "vue-router"
 import PostPage from "@/pages/PostPage.vue"
 import About from "@/pages/About.vue"
-import PostIdPage from "@/components/PostIdPage.vue"
+import PostIdPage from "@/pages/PostIdPage.vue"
 
 
 const routes = [
