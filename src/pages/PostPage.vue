@@ -4,6 +4,7 @@
     <my-input
       v-model="searchQuery"
       placeholder="Поиск...."
+      v-focus
     />
     <div class="app__Btns">
       <my-button @click ="showDialog">
@@ -25,7 +26,7 @@
       v-if="!isPostLoading"
     />
     <div v-else>Идёт загрузка...</div>
-    <div v-intersection class="observer"></div>
+    <div v-intersection="loadMorePosts" class="observer"></div>
     <!-- <div ref="observer" class="observer"></div> -->
     <!-- Кнопки страниц -->
     <!-- <div class="page__wrapper">
@@ -131,18 +132,18 @@ export default {
   mounted() {
     // Intersection Observer API подгрузка страницы
     this.fetchPosts();
-    /* console.log(this.$refs.observer); */
-    /* const options = {
-      rootMargin: '0px',
-      threshold: 1.0
-    }
-    const callback = (entries, observer) => {
-      if (entries[0].isIntersecting && this.totalPage) {
-        this.loadMorePosts()
-      }
-    };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$refs.observer); */
+    // console.log(this.$refs.observer);
+    // const options = {
+    //   rootMargin: '0px',
+    //   threshold: 1.0
+    // }
+    // const callback = (entries, observer) => {
+    //   if (entries[0].isIntersecting && this.totalPage) {
+    //     this.loadMorePosts()
+    //   }
+    // };
+    // const observer = new IntersectionObserver(callback, options);
+    // observer.observe(this.$refs.observer);
   },
   computed: {
     sortedPost() {
