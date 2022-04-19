@@ -1,19 +1,21 @@
 <template>
   <div>
     <h1>Страница с постами</h1>
-    <!-- <my-input
-      v-model="searchQuery"
+    <my-input
+      :model-value="searchQuery"
+      @update:model-value="setSearchQuery"
       placeholder="Поиск...."
       v-focus
-    /> -->
+    />
     <div class="app__Btns">
       <my-button @click ="showDialog">
         Создать пост 
       </my-button>
-      <!-- <my-select
-        v-model="selectedSort"
+      <my-select
+        :model-value="selectedSort"
+        @update:model-value="setSelectedSort"
         :options="sortOptions"
-      /> -->
+      />
     </div>
     <my-dialog v-model:show ="dialogVisible">
       <post-form
@@ -53,11 +55,13 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setPage: 'post/setPage'
+      setPage: 'post/setPage',
+      setSearchQuery: 'post/setSearchQuery',
+      setSelectedSort: 'post/setSelectedSort',
     }),
     ...mapActions({
       loadMorePosts: 'post/loadMorePosts',
-      fetchPosts: 'post/fetchPosts'
+      fetchPosts: 'post/fetchPosts',
     }),
     createPost(post) {
       this.posts.push(post);
@@ -82,7 +86,7 @@ export default {
       page: state => state.post.page,
       limit: state => state.post.limit,
       totalPage: state => state.post.totalPage,
-      sortOptions: state => state.post.sortOptions
+      sortOptions: state => state.post.sortOptions,
       }),
     ...mapGetters({
       sortedPost: 'post/sortedPosts',
@@ -124,4 +128,5 @@ export default {
   height: 30px;
   background: green;
 }
+
 </style>
