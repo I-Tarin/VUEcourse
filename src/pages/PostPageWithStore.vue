@@ -1,0 +1,127 @@
+<template>
+  <div>
+    <h1>Страница с постами</h1>
+    <!-- <my-input
+      v-model="searchQuery"
+      placeholder="Поиск...."
+      v-focus
+    /> -->
+    <div class="app__Btns">
+      <my-button @click ="showDialog">
+        Создать пост 
+      </my-button>
+      <!-- <my-select
+        v-model="selectedSort"
+        :options="sortOptions"
+      /> -->
+    </div>
+    <my-dialog v-model:show ="dialogVisible">
+      <post-form
+        @create ="createPost"
+      />
+    </my-dialog>
+    <post-list
+      :posts="sortedAndSearchedPosts"
+      @remove="removePost"
+      v-if="!isPostLoading"
+    />
+    <div v-else>Идёт загрузка...</div>
+    <div v-intersection="loadMorePosts" class="observer"></div> 
+  </div>
+</template>
+<script>
+import PostForm from "@/components/PostForm";
+import PostList from "@/components/PostList";
+import MyButton from "@/components/UI/MyButton";
+import axios from 'axios';
+import MySelect from "@/components/UI/MySelect";
+import MyInput from '@/components/UI/MyInput.vue';
+import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
+
+export default {
+  components: {
+    MyInput,
+    MySelect,
+    MyButton,
+    PostList,
+    PostForm,
+  },
+  data() {
+    return {
+      dialogVisible: false,
+    }
+  },
+  methods: {
+    ...mapMutations({
+      setPage: 'post/setPage'
+    }),
+    ...mapActions({
+      loadMorePosts: 'post/loadMorePosts',
+      fetchPosts: 'post/fetchPosts'
+    }),
+    createPost(post) {
+      this.posts.push(post);
+      this.dialogVisible = false;
+    },
+    removePost(post) {
+      this.posts = this.posts.filter(p => p.id !== post.id)
+    },
+    showDialog() {
+      this.dialogVisible = true;
+    },
+  },
+  mounted() {
+    this.fetchPosts();
+  },
+  computed: {
+    ...mapState({
+      posts: state => state.post.posts,
+      isPostLoading: state => state.post.isPostLoading,
+      selectedSort: state => state.post.selectedSort,
+      searchQuery: state => state.post.searchQuery,
+      page: state => state.post.page,
+      limit: state => state.post.limit,
+      totalPage: state => state.post.totalPage,
+      sortOptions: state => state.post.sortOptions
+      }),
+    ...mapGetters({
+      sortedPost: 'post/sortedPosts',
+      sortedAndSearchedPosts: 'post/sortedAndSearchedPosts'
+    })
+  },
+  watch: {
+  }
+}
+</script>
+
+<style>
+
+.app__Btns
+{
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.page__wrapper
+{
+  display: flex;
+  margin-top: 15px;
+}
+.page
+{
+  border: 1px solid black;
+  padding: 10px;
+  margin-right: 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.current-page
+{
+  border: 2px solid teal;
+}
+.observer
+{
+  height: 30px;
+  background: green;
+}
+</style>

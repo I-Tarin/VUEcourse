@@ -3,5 +3,4 @@ export default {
     el.focus()
   },
   name: 'focus'
-
 }

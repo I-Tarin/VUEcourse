@@ -13,5 +13,4 @@ export default {
     observer.observe(el);
   },
   name: 'intersection'
-
 }
