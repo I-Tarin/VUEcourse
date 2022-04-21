@@ -10,7 +10,7 @@
       <my-button
         @click="showDialog"
       >
-        Создать пользователя
+        Создать пост
       </my-button>
       <my-select
         v-model="selectedSort"

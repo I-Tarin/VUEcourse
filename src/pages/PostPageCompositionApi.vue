@@ -9,7 +9,7 @@
     <div class="app__btns">
       <my-button
       >
-        Создать пользователя
+        Создать пост
       </my-button>
       <my-select
         v-model="selectedSort"
