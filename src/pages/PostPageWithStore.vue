@@ -7,11 +7,11 @@
       placeholder="Поиск...."
       v-focus
     />
-    <div class="app__Btns">
+    <div class="app__btns">
       <my-button
-        @click ="showDialog"
+        @click="showDialog"
       >
-        Создать пост 
+        Создать пользователя
       </my-button>
       <my-select
         :model-value="selectedSort"
@@ -19,27 +19,26 @@
         :options="sortOptions"
       />
     </div>
-    <my-dialog v-model:show ="dialogVisible">
+    <my-dialog v-model:show="dialogVisible">
       <post-form
-        @create ="createPost"
+        @create="createPost"
       />
     </my-dialog>
     <post-list
       :posts="sortedAndSearchedPosts"
       @remove="removePost"
-      v-if="!isPostLoading"
+      v-if="!isPostsLoading"
     />
-    <div v-else>Идёт загрузка...</div>
+    <div v-else>Идет загрузка...</div>
     <div v-intersection="loadMorePosts" class="observer"></div>
-    <!-- Кнопки страниц -->
     <div class="page__wrapper">
       <div
-        v-for="pageNumber in totalPage"
+        v-for="pageNumber in totalPages"
         :key="pageNumber"
         class="page"
         :class="{
-          'current-page': page === pageNumber
-        }"
+              'current-page': page === pageNumber
+            }"
         @click="changePage(pageNumber)"
       >
         {{ pageNumber }}
@@ -47,13 +46,14 @@
     </div>
   </div>
 </template>
+
 <script>
 import PostForm from "@/components/PostForm";
 import PostList from "@/components/PostList";
 import MyButton from "@/components/UI/MyButton";
 import axios from 'axios';
 import MySelect from "@/components/UI/MySelect";
-import MyInput from '@/components/UI/MyInput.vue';
+import MyInput from "@/components/UI/MyInput";
 import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
 
 export default {
@@ -61,8 +61,7 @@ export default {
     MyInput,
     MySelect,
     MyButton,
-    PostList,
-    PostForm,
+    PostList, PostForm
   },
   data() {
     return {
@@ -77,7 +76,7 @@ export default {
     }),
     ...mapActions({
       loadMorePosts: 'post/loadMorePosts',
-      fetchPosts: 'post/fetchPosts',
+      fetchPosts: 'post/fetchPosts'
     }),
     createPost(post) {
       this.posts.push(post);
@@ -89,11 +88,6 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
-    // кнопки страницы снизу
-    // changePage(pageNumber) {
-    //   this.page = pageNumber
-    //   // this.fetchPosts()
-    // },
   },
   mounted() {
     this.fetchPosts();
@@ -101,54 +95,48 @@ export default {
   computed: {
     ...mapState({
       posts: state => state.post.posts,
-      isPostLoading: state => state.post.isPostLoading,
+      isPostsLoading: state => state.post.isPostsLoading,
       selectedSort: state => state.post.selectedSort,
       searchQuery: state => state.post.searchQuery,
       page: state => state.post.page,
       limit: state => state.post.limit,
-      totalPage: state => state.post.totalPage,
-      sortOptions: state => state.post.sortOptions,
+      totalPages: state => state.post.totalPages,
+      sortOptions: state => state.post.sortOptions
     }),
     ...mapGetters({
-      sortedPost: 'post/sortedPost',
+      sortedPosts: 'post/sortedPosts',
       sortedAndSearchedPosts: 'post/sortedAndSearchedPosts'
     })
   },
   watch: {
-
+    // page() {
+    //   this.fetchPosts()
+    // }
   }
 }
 </script>
 
 <style>
 
-.app__Btns
-{
+.app__btns {
   margin: 15px 0;
   display: flex;
   justify-content: space-between;
 }
-.page__wrapper
-{
+.page__wrapper {
   display: flex;
   margin-top: 15px;
 }
-.page
-{
+.page {
   border: 1px solid black;
   padding: 10px;
-  margin-right: 2px;
-  cursor: pointer;
-  border-radius: 10px;
 }
-.current-page
-{
+.current-page {
   border: 2px solid teal;
 }
-.observer
-{
+
+.observer {
   height: 30px;
   background: green;
 }
-
 </style>

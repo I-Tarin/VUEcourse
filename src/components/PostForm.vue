@@ -3,27 +3,27 @@
     <h4>Создание поста</h4>
     <my-input
       v-focus
-      v-model ="post.title"
-      type ="text"
-      placeholder ="Название"
+      v-model="post.title"
+      type="text"
+      placeholder="Название"
     />
     <my-input
-      v-model ="post.body"
-      type ="text"
-      placeholder ="Описание"
+      v-model="post.body"
+      type="text"
+      placeholder="Описание"
     />
     <my-button
-      style ="align-self: flex-end; margin-top: 15px;"
-      @click ="createPost"
+      style="align-self: flex-end; margin-top: 15px"
+      @click="createPost"
     >
-     Создать
+      Создать
     </my-button>
   </form>
 </template>
 
 <script>
 export default {
-    data() {
+  data() {
     return {
       post: {
         title: '',
@@ -41,20 +41,11 @@ export default {
       }
     }
   },
-/* глубокое отслеживание*/
-/*  watch: {
-    post: {
-      handler(nawVal) {
-        console.log(nawVal)
-      },
-      deep: true
-    }
-  } */
 }
 </script>
-<style>
-form
-{
+
+<style scoped>
+form {
   display: flex;
   flex-direction: column;
 }

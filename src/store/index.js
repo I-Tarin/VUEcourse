@@ -1,29 +1,11 @@
-import { createStore } from "vuex";
-import { postModule } from "@/store/postMolule";
+import {createStore} from "vuex";
+import {postModule} from "@/store/postModule";
 
 export default createStore({
-  /* использование "сторе" на примере лайков и авторизации */
-  /* state: {
-    likes: 2,
-    isAuth: false,
-  },
-  getters: {
-    doubleLikes(state) {
-      return state.likes * 2
-    }
-  },
-  mutations: {
-    incrementLikes(state) {
-      state.likes += 1
+    state: {
+      isAuth: false,
     },
-    decrementLikes(state) {
-      state.likes -= 1
+    modules: {
+        post: postModule
     }
-  },
-  actions: {
-
-  }, */
-  modules: {
-    post: postModule
-  }
 })
