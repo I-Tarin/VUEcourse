@@ -8,7 +8,9 @@
       v-focus
     />
     <div class="app__Btns">
-      <my-button @click ="showDialog">
+      <my-button
+        @click ="showDialog"
+      >
         Создать пост 
       </my-button>
       <my-select
@@ -28,7 +30,21 @@
       v-if="!isPostLoading"
     />
     <div v-else>Идёт загрузка...</div>
-    <div v-intersection="loadMorePosts" class="observer"></div> 
+    <div v-intersection="loadMorePosts" class="observer"></div>
+    <!-- Кнопки страниц -->
+    <div class="page__wrapper">
+      <div
+        v-for="pageNumber in totalPage"
+        :key="pageNumber"
+        class="page"
+        :class="{
+          'current-page': page === pageNumber
+        }"
+        @click="changePage(pageNumber)"
+      >
+        {{ pageNumber }}
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -73,6 +89,11 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
+    // кнопки страницы снизу
+    // changePage(pageNumber) {
+    //   this.page = pageNumber
+    //   // this.fetchPosts()
+    // },
   },
   mounted() {
     this.fetchPosts();
@@ -87,13 +108,14 @@ export default {
       limit: state => state.post.limit,
       totalPage: state => state.post.totalPage,
       sortOptions: state => state.post.sortOptions,
-      }),
+    }),
     ...mapGetters({
-      sortedPost: 'post/sortedPosts',
+      sortedPost: 'post/sortedPost',
       sortedAndSearchedPosts: 'post/sortedAndSearchedPosts'
     })
   },
   watch: {
+
   }
 }
 </script>

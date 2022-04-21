@@ -17,7 +17,7 @@ export const postModule = {
       return [...state.posts].sort((post1, post2) => post1[state.selectedSort]?.localeCompare(post2[state.selectedSort]))
     },
     sortedAndSearchedPosts(state, getters) {
-      return getters.sortedPost.filter(post => post.title.toLowerCase().includes(getters.searchQuery.toLowerCase()))
+      return getters.sortedPost.filter(post => post.title.toLowerCase().includes(state.searchQuery.toLowerCase()))
     }
   },
   mutations: {
@@ -51,7 +51,7 @@ export const postModule = {
           }
         });
         commit('setTotalPage', Match.ceil(response.headers['x-total-count'] / state.limit))
-        commit('aetPosts', response.data)
+        commit('setPosts', response.data)
       } catch (e) {
         console.log(e)
       } finally {

@@ -7,11 +7,13 @@
     </div>
     <div class ="post__btns">
       <my-button
-      @click ="$router.push(`/posts/${post.id}`)">
+        @click ="$router.push(`/posts/${post.id}`)"
+      >
         Открыть
       </my-button>
       <my-button
-      @click ="$emit('remove', post)">
+        @click ="$emit('remove', post)"
+      >
         Удалить
       </my-button>
     </div>
@@ -19,8 +21,7 @@
 </template>
 
 <script>
-export default
-{
+export default {
   props: {
     post: {
       type: Object,
